@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, make_response, response, request
 from models import home_library
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ def create_book():
         'read': False
     }
     home_library.create(book)
-    return jsonify({'book': book}), 201
+    return Response(status=201)
 
 
 @app.errorhandler(400)
@@ -48,7 +48,7 @@ def delete_book(book_id):
     result = home_library.delete(book_id)
     if not result:
         abort(404)
-    return jsonify({'result': result})
+    return Response(status=200)
 
 
 @app.route("/api/v1/homelibrary/<int:book_id>", methods=["PUT"])
