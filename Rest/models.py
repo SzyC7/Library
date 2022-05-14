@@ -2,9 +2,10 @@ import json
 
 
 class Library:
-    def __init__(self):
+    def __init__(self, filename):
+        self.filename
         try:
-            with open("api_library.json", "r") as f:
+            with open(self.filename, "r") as f:
                 self.home_library = json.load(f)
         except FileNotFoundError:
             self.home_library = []
@@ -23,7 +24,7 @@ class Library:
         self.save_all()
 
     def save_all(self):
-        with open("api_library.json", "w") as f:
+        with open(self.filename, "w") as f:
             json.dump(self.home_library, f)
 
     def update(self, id, data):
@@ -43,5 +44,4 @@ class Library:
             return True
         return False
 
-
-home_library = Library()
+home_library = Library("api_library.json")
